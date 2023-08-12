@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Sale</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+  <h1>Edit Sale</h1>
+  <form th:action="@{/edit-sale/{id}(id=${saleForm.id})}" method="post">
+    <div class="form-group">
+      <label for="recno">Receipt No:</label>
+      <input type="text" class="form-control" id="recno" name="recno" th:value="${saleForm.recno}" required>
+    </div>
+    <div class="form-group">
+      <label for="icode">Item Code:</label>
+      <input type="text" class="form-control" id="icode" name="icode" th:value="${saleForm.icode}" required>
+    </div>
+    <div class="form-group">
+      <label for="qty">Quantity:</label>
+      <input type="text" class="form-control" id="qty" name="qty" th:value="${saleForm.qty}" required>
+    </div>
+    <div class="form-group">
+      <label for="dot">Transaction Date:</label>
+      <input type="date" class="form-control" id="dot" name="dot" th:value="${#dates.format(saleForm.dot, 'yyyy-MM-dd')}" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+  </form>
+  <br>
+  <a th:href="@{/}" class="btn btn-secondary">Back to Sales</a>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

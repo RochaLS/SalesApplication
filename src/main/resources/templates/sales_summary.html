@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Receipt and Sales Form</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+  <h1 class="mt-4">Category Sales Report</h1>
+  <table class="table table-bordered mt-3">
+    <thead>
+    <tr>
+      <th>Category Code</th>
+      <th>Category Description</th>
+      <th>Total Sales</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Use Thymeleaf iteration here to populate rows -->
+    <tr>
+      <td>101</td>
+      <td>School Supplies</td>
+      <td>$125.50</td>
+    </tr>
+    <!-- Repeat for other categories -->
+    </tbody>
+  </table>
+
+  <div class="mt-5">
+    <h2>Add Sales Entry</h2>
+    <form th:action="@{/add-sale}" method="post">
+      <label>Receipt No:</label>
+      <input type="text" class="form-control" name="recno" required><br>
+      <label>Item Type:</label>
+      <select class="form-control" name="icode">
+        <option th:each="item : ${items}" th:value="${item.getIcode()}"
+                th:text="${item.getIdesc() + ' - ' + item.getPrice()}"></option>
+      </select><br>
+      <label>Quantity:</label>
+      <input type="text" class="form-control" name="qty" required><br>
+      <label>Transaction Date:</label>
+      <input type="date" class="form-control" name="dot" value="2023-11-08"><br>
+      <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+  </div>
+
+  <h2 class="mt-5">Sales History</h2>
+  <table class="table table-bordered mt-3">
+    <thead>
+    <tr>
+      <th>Receipt No</th>
+      <th>Item Code</th>
+      <th>Quantity</th>
+      <th>Transaction Date</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="sale : ${sales}">
+      <td th:text="${sale.getRecno()}">Receipt No</td>
+      <td th:text="${sale.getIcode()}">Item Code</td>
+      <td th:text="${sale.getQty()}">Quantity</td>
+      <td th:text="${#dates.format(sale.getDot(), 'yyyy-MM-dd')}">Transaction Date</td>
+      <td>
+        <a th:href="@{'/edit-sale/' + ${sale.getId()}}" class="btn btn-primary btn-sm">Edit</a>
+        <a th:href="@{'/delete-sale/' + ${sale.getId()}}" class="btn btn-danger btn-sm">Delete</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  function validateForm() {
+    var receiptNo = document.getElementsByName("receiptNo")[0].value;
+    var quantity = document.getElementsByName("quantity")[0].value;
+
+    console.log(receiptNo)
+
+    if (receiptNo === "" || receiptNo === " ") {
+      alert("Receipt no cannot be 0");
+      return false;
+    } else if (quantity === " " || quantity === " ") {
+      alert("Qty no cannot be 0");
+      return false;
+    }
+
+    return true;
+  }
+</script>
+</body>
+</html>
